@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      env: "prod"
+    matchExpressions:
+      - {key: team, operator: In, values: [bfg, sfg]}
+      - {key: tier, operator: In, values: (backend)}
+  template:
+    metadata:
+      name: testing
+      labels:
+        env: "prod"
+        team: "bfg"
+        tier: "backend"
+    spec:
+      containers:
+      - name: "my-container"
+        image: "tomcat"
